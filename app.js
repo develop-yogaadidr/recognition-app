@@ -5,7 +5,6 @@ var express = require("express");
 var logger = require("morgan");
 var multer = require("multer");
 var path = require("path");
-const dbo = require("./db/conn");
 
 global.fetch = require("cross-fetch");
 global.upload = multer();
@@ -54,12 +53,5 @@ async function loadModels() {
   await faceapi.nets.faceLandmark68TinyNet.loadFromDisk("./public/weights");
   await faceapi.nets.faceRecognitionNet.loadFromDisk("./public/weights");
 }
-
-dbo.connectToServer(function (err) {
-  if (err) {
-    console.error(err);
-    process.exit();
-  }
-});
 
 module.exports = app;
