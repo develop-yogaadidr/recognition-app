@@ -1,4 +1,4 @@
-const modelUrl = "http://localhost:3000/models/";
+const modelUrl = "https://recognition-node-app.herokuapp.com/models/";
 
 const { bufferToBase64 } = require("../commons/helpers");
 const TeachableMachine = require("@sashido/teachablemachine-node");
