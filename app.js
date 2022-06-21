@@ -5,6 +5,7 @@ var express = require("express");
 var logger = require("morgan");
 var multer = require("multer");
 var path = require("path");
+require('@tensorflow/tfjs-node');
 
 global.fetch = require("cross-fetch");
 global.upload = multer();
