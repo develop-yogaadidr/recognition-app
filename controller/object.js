@@ -1,4 +1,5 @@
 const { response } = require("../commons/response");
+const { ResponseCode } = require("../commons/responseCode");
 const { ObjectRecognition } = require("../helper/objectRecognition");
 
 exports.Object = async (req, res, next) => {
