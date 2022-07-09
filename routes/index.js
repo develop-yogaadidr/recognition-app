@@ -10,13 +10,10 @@ const ocrControlelr = require("../controller/ocr");
 const serverController = require("../controller/server");
 
 router.get('/', async function(req, res, next){
-  var result = await user.getAllPasienAsync();
-
   let information = {
     Version: process.env.APP_VERSION ?? "0.0",
     Name: process.env.APP_NAME ?? "Recognition Apps",
-    ServerUrl: process.env.SERVER_URL ?? "http://localhost:3000",
-    Data:result
+    ServerUrl: process.env.SERVER_URL ?? "http://localhost:3000"
   }
   res.json(information);
 });
