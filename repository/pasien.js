@@ -1,6 +1,5 @@
 const { client } = require("../db/conn");
-const { ObjectId } = require("mongodb");
-
+const ServerRepository = require("./server");
 const collectionName = "pasien";
 
 exports.getAllPasienAsync = async () => {
@@ -19,6 +18,24 @@ exports.getPasienAsync = async (nik) => {
   client.close();
 
   return result;
+};
+
+exports.getFromOtherServers = async (nik) => {
+  let servers = await ServerRepository.getAllServers();
+  let pasien = null;
+
+  for (const element of servers) {
+    let response = await fetch(`${element.url}/pasien/${nik}/self`);
+    if(response.status == 200){
+      let result = await response.json()
+      if(result.data != null){
+        pasien = result.data 
+        break;
+      }
+    }
+  }
+
+  return pasien;
 };
 
 exports.updatePasien = async (nik, data) => {

@@ -1,7 +1,7 @@
-const dbconfig = require("../config/dbconfig.json");
+const dbconfig = require("../config/dbconfig.js");
 
 const { MongoClient } = require("mongodb");
-const uri = `mongodb+srv://${dbconfig.db.user}:${dbconfig.db.password}@cluster0.5hrpm.mongodb.net/${dbconfig.db.database}?retryWrites=true&w=majority`;
+const uri = dbconfig.URI;
 
 const client = new MongoClient(uri, {
   useNewUrlParser: true,

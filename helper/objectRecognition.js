@@ -1,4 +1,5 @@
-const modelUrl = "https://recognition-node-app.herokuapp.com/models/";
+require('dotenv').config();
+const modelUrl = `${process.env.SERVER_URL}/models`;
 
 const { bufferToBase64 } = require("../commons/helpers");
 const TeachableMachine = require("@sashido/teachablemachine-node");
