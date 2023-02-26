@@ -9,7 +9,7 @@ exports.getAllPasienAsync = async () => {
   await client.connect()
   let db = repo();
   let result = await db.find({}).limit(50).toArray();
-  client.close();
+  // client.close();
 
   return result;
 };
@@ -17,9 +17,9 @@ exports.getAllPasienAsync = async () => {
 exports.getPasienAsync = async (nik) => {
   await client.connect()
   let db = repo();
-  let result = await db.findOne({"nik" : nik});
+  let result = await db.findOne({ "nik": nik });
 
-  client.close();
+  // client.close();
 
   return result;
 };
@@ -30,10 +30,10 @@ exports.getFromOtherServers = async (nik) => {
 
   for (const element of servers) {
     let response = await fetch(`${element.url}/pasien/${nik}/self`);
-    if(response.status == 200){
+    if (response.status == 200) {
       let result = await response.json()
-      if(result.data != null){
-        pasien = result.data 
+      if (result.data != null) {
+        pasien = result.data
         break;
       }
     }
@@ -45,9 +45,9 @@ exports.getFromOtherServers = async (nik) => {
 exports.updatePasien = async (nik, data) => {
   await client.connect()
   let db = repo();
-  let query = {nik: nik};
+  let query = { nik: nik };
   let result = await db.updateOne(query, data);
-  client.close();
+  // client.close();
 
   return result;
 }

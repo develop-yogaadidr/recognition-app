@@ -8,7 +8,7 @@ exports.getAllServers = async () => {
   await client.connect()
   let db = repo();
   let result = await db.find({}).limit(50).toArray();
-  client.close();
+  // client.close();
 
   return result;
 };
@@ -16,9 +16,9 @@ exports.getAllServers = async () => {
 exports.updateServer = async (id, data) => {
   await client.connect()
   let db = repo();
-  let query = {_id: ObjectId(id)};
+  let query = { _id: ObjectId(id) };
   let result = await db.updateOne(query, data);
-  client.close();
+  // client.close();
 
   return result;
 }
@@ -27,7 +27,7 @@ exports.createServer = async (data) => {
   await client.connect()
   let db = repo();
   let result = await db.insertOne(data);
-  client.close();
+  // client.close();
 
   return result;
 }
@@ -35,9 +35,9 @@ exports.createServer = async (data) => {
 exports.deleteServer = async (id) => {
   await client.connect()
   let db = repo();
-  let query = {_id: ObjectId(id)};
+  let query = { _id: ObjectId(id) };
   let result = await db.deleteOne(query);
-  client.close();
+  // client.close();
 
   return result;
 }

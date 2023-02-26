@@ -24,9 +24,9 @@ exports.GetFaceDescriptors = async (image) => {
 };
 
 exports.ToLabeledFaceDescriptors = async (param, label = "Unknown") => {
-    var data = Object.keys(param.descriptor).map((key) => [param.descriptor[key]]);
-    var result = new Float32Array(data)
-    param.descriptor = result;
-    
-    return param;
+  var data = Object.keys(param.descriptor).map((key) => [param.descriptor[key]]);
+  var result = new Float32Array(data)
+  param.descriptor = result;
+
+  return param;
 }

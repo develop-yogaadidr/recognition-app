@@ -1,9 +1,7 @@
 var { ResponseCode } = require("./responseCode")
 
 exports.response = (res, data = null, code = ResponseCode.Success, message = null) => {
-    var result = {
-        "status": code == ResponseCode.Success ? "Success" : "Failed",
-    }
+    var result = {}
 
     if(data != null){
         result["data"] = data

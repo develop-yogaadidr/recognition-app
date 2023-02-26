@@ -8,13 +8,21 @@ const { checkSupportedImages } = require("../commons/helpers");
 exports.GetByNik = async (req, res, next) => {
   let params = req.params;
   let result = await PasienRepository.getPasienAsync(params.nik);
+  if (result == null) {
+    response(res, null, ResponseCode.NotFound, `Pasien with NIK ${params.nik} is not found`);
+    return;
+  }
 
   response(res, result);
 };
 
-exports.GetFromOtherServer = async(req, res, next) =>{
+exports.GetFromOtherServer = async (req, res, next) => {
   let params = req.params;
   let result = await ensurePasienFound(params.nik);
+  if (result == null) {
+    response(res, null, ResponseCode.NotFound, `Pasien with NIK ${params.nik} is not found`);
+    return;
+  }
 
   response(res, result);
 }
@@ -26,13 +34,13 @@ exports.Update = async (req, res, next) => {
     return;
   }
 
-  if(!checkSupportedImages(queryImage)){
+  if (!checkSupportedImages(queryImage)) {
     response(res, null, ResponseCode.BadRequest, "Unsupported image type")
     return;
   }
 
   let faceDecriptor = await GetFaceDescriptor(queryImage.buffer);
-  if(faceDecriptor == undefined){
+  if (faceDecriptor == undefined) {
     response(res, null, ResponseCode.BadRequest, "Face not detected")
     return;
   }
@@ -56,15 +64,15 @@ exports.Recognize = async (req, res, next) => {
     return;
   }
 
-  if(!checkSupportedImages(queryImage)){
+  if (!checkSupportedImages(queryImage)) {
     response(res, null, ResponseCode.BadRequest, "Unsupported image type")
     return;
   }
 
   let params = req.params;
   let pasien = await ensurePasienFound(params.nik);
-  if(pasien == null){
-    response(res, null, ResponseCode.NotFound);
+  if (pasien == null) {
+    response(res, null, ResponseCode.NotFound, `Pasien with NIK ${nik} is not found`);
     return;
   }
 
@@ -77,13 +85,13 @@ exports.Recognize = async (req, res, next) => {
   response(res, result);
 };
 
-async function ensurePasienFound(nik){
+async function ensurePasienFound(nik) {
   let pasien = await PasienRepository.getPasienAsync(nik);
   let result = pasien;
 
-  if(result == null){
+  if (result == null) {
     let pasienOtherServers = await PasienRepository.getFromOtherServers(nik);
-    if(pasienOtherServers != null){
+    if (pasienOtherServers != null) {
       result = pasienOtherServers;
     }
   }

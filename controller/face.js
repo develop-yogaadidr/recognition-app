@@ -5,7 +5,7 @@ const { FaceRecognition } = require("../helper/faceRecognition");
 
 exports.Face = async (req, res, next) => {
   var queryImage = await req.files;
-  if (requestImage.length != 2) {
+  if (queryImage ==null || queryImage.length != 2) {
     response(res, null, ResponseCode.BadRequest, "parameter 'Images' is required");
     return;
   }

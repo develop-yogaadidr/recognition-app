@@ -15,16 +15,18 @@ exports.CompareDecriptor = async (dec1, dec2) => {
 
   var data = {
     score: `0%`,
+    threshold: `${process.env.RECOGNITION_THRESHOLD}%`,
     recognize: false,
   };
 
   results.forEach((result, i) => {
-    if (result.distance < process.env.RECOGNITION_THRESHOLD && result.label != "unknown") {
-      data = {
-        score: `${((1 - result.distance) * 100).toFixed(2)}%`,
-        recognize: true,
-      };
+    let score = (1 - result.distance) * 100;
+    data.recognize = false;
+    if (score >= process.env.RECOGNITION_THRESHOLD && result.label != "unknown") {
+      data.recognize = true
     }
+
+    data.score = `${score.toFixed(2)}%`;
   });
 
   return data;
