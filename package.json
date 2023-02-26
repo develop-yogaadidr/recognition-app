@@ -11,7 +11,7 @@
     "@tensorflow/tfjs-node": "^3.13.0",
     "@vladmandic/face-api": "^1.6.5",
     "body-parser": "^1.19.1",
-    "canvas": "^2.9.0",
+    "canvas": "^2.6.1",
     "cookie-parser": "~1.4.4",
     "cross-fetch": "^3.1.5",
     "debug": "~2.6.9",

@@ -1247,7 +1247,7 @@ call-bind@^1.0.0:
     function-bind "^1.1.1"
     get-intrinsic "^1.0.2"
 
-canvas@^2.9.0:
+canvas@^2.6.1:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/canvas/-/canvas-2.11.0.tgz#7f0c3e9ae94cf469269b5d3a7963a7f3a9936434"
   integrity sha512-bdTjFexjKJEwtIo0oRx8eD4G2yWoUOXP9lj279jmQ2zMnTQhT8C3512OKz3s+ZOaQlLbE7TuVvRDYDB3Llyy5g==
@@ -2099,9 +2099,9 @@ mimic-response@^2.0.0:
   integrity sha512-wXqjST+SLt7R009ySCglWBCFpjUygmCIfD790/kVbiGmUgfYGuB14PiTd5DwVxSV4NcYHjzMkoj5LjQZwTQLEA==
 
 minimatch@>=0.2.4:
-  version "7.1.4"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-7.1.4.tgz#5b252ebef9931e082549370815afdec3caed0319"
-  integrity sha512-dZdn8jDUB4Y3eu7hABT6IgLTMQ9cVf+vhhXjLAkuN40wRkweVxEpvnGYLYZUhNB0P+BbTOZDzo+1rCitOQWc3g==
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-7.2.0.tgz#741ff59370007ebb8faff0a9b20cdb44357803e4"
+  integrity sha512-rMRHmwySzopAQjmWW6TkAKCEDKNaY/HuV/c2YkWWuWnfkTwApt0V4hnYzzPnZ/5Gcd2+8MPncSyuOGPl3xPvcg==
   dependencies:
     brace-expansion "^2.0.1"
 
