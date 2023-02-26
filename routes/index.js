@@ -8,6 +8,7 @@ const faceController = require("../controller/face");
 const objectControlelr = require("../controller/object");
 const ocrControlelr = require("../controller/ocr");
 const serverController = require("../controller/server");
+const databaseController = require("../controller/database");
 
 router.get('/', async function(req, res, next){
   let information = {
@@ -27,9 +28,12 @@ router.post("/pasien/:nik/recognize", upload.single('image'), pasienController.R
 router.get("/servers", serverController.GetAll);
 router.post("/servers", serverController.Insert);
 router.post("/servers/:id", serverController.Update);
+router.delete("/servers/:id", serverController.Delete);
 
 router.post("/object", upload.single('image'), objectControlelr.Object)
 router.post("/ocr", upload.single('image'), ocrControlelr.Ocr)
 router.post('/face', upload.array('images', 2), faceController.Face);
+
+router.post('/database/initialize', databaseController.Initialize);
 
 module.exports = router;

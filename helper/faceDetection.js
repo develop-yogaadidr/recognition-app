@@ -1,4 +1,3 @@
-const { LabeledFaceDescriptors } = require("@vladmandic/face-api");
 const { canvas } = require("../commons/env");
 const { faceDetectionOptions } = require("../commons/faceDetection");
 

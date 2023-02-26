@@ -36,3 +36,9 @@ exports.Insert = async (req, res, next) => {
   let result = await ServerRepository.createServer(data);
   response(res, req.body);
 };
+
+exports.Delete = async (req, res, next) => {
+  let params = req.params;
+  let result = await ServerRepository.deleteServer(params.id);
+  response(res, req.body);
+};

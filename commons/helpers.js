@@ -4,3 +4,14 @@ exports.bufferToBase64 = (image) => {
 
   return base64Result;
 };
+
+exports.checkSupportedImages = (image) => {
+  let supportedImages = [
+    "application/octet-stream",
+    "image/png",
+    "image/jpg",
+    "image/jpeg"
+  ]
+
+  return supportedImages.filter(s => s == image.mimetype).length > 0
+}

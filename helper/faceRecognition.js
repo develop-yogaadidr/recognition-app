@@ -1,3 +1,4 @@
+require('dotenv').config();
 const displaySize = { width: 200, height: 200 };
 
 const { canvas } = require("../commons/env");
@@ -13,15 +14,15 @@ exports.CompareDecriptor = async (dec1, dec2) => {
   });
 
   var data = {
-    distance: 1.0,
-    detected: false,
+    score: `0%`,
+    recognize: false,
   };
 
   results.forEach((result, i) => {
-    if (result.distance < 0.5 && result.label != "unknown") {
+    if (result.distance < process.env.RECOGNITION_THRESHOLD && result.label != "unknown") {
       data = {
-        distance: result.distance,
-        detected: true,
+        score: `${((1 - result.distance) * 100).toFixed(2)}%`,
+        recognize: true,
       };
     }
   });

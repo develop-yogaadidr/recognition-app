@@ -3,6 +3,7 @@ const { ResponseCode } = require("../commons/responseCode");
 const PasienRepository = require("../repository/pasien");
 const { GetFaceDescriptor, GetFaceDescriptors, ToLabeledFaceDescriptors } = require("../helper/faceDetection");
 const { CompareDecriptor } = require("../helper/faceRecognition");
+const { checkSupportedImages } = require("../commons/helpers");
 
 exports.GetByNik = async (req, res, next) => {
   let params = req.params;
@@ -21,11 +22,21 @@ exports.GetFromOtherServer = async(req, res, next) =>{
 exports.Update = async (req, res, next) => {
   var queryImage = await req.file;
   if (queryImage == null) {
-    response(res, null, ResponseCode.BadRequest);
+    response(res, null, ResponseCode.BadRequest, "parameter 'Image' is required");
+    return;
+  }
+
+  if(!checkSupportedImages(queryImage)){
+    response(res, null, ResponseCode.BadRequest, "Unsupported image type")
     return;
   }
 
   let faceDecriptor = await GetFaceDescriptor(queryImage.buffer);
+  if(faceDecriptor == undefined){
+    response(res, null, ResponseCode.BadRequest, "Face not detected")
+    return;
+  }
+
   let params = req.params;
 
   let query = {
@@ -41,7 +52,12 @@ exports.Update = async (req, res, next) => {
 exports.Recognize = async (req, res, next) => {
   var queryImage = await req.file;
   if (queryImage == null) {
-    response(res, null, ResponseCode.BadRequest);
+    response(res, null, ResponseCode.BadRequest, "parameter 'Image' is required");
+    return;
+  }
+
+  if(!checkSupportedImages(queryImage)){
+    response(res, null, ResponseCode.BadRequest, "Unsupported image type")
     return;
   }
 

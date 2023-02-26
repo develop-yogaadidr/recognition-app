@@ -1,24 +1,17 @@
 var { ResponseCode } = require("./responseCode")
 
-exports.response = (res, data, code = ResponseCode.Success) => {
+exports.response = (res, data = null, code = ResponseCode.Success, message = null) => {
     var result = {
         "status": code == ResponseCode.Success ? "Success" : "Failed",
-        "code": code,
-        "data": code == ResponseCode.Success ? data : generateErrorMessage(code)
     }
 
-    res.json(result);
-}
-
-function generateErrorMessage(errorCode){
-    switch(errorCode) {
-        case ResponseCode.BadRequest:
-            return "Bad Request"
-        case ResponseCode.NotFound:
-            return "Not Found"
-        case ResponseCode.InternalServerError:
-            return "Internal Server Error"
-        default:
-            return null
+    if(data != null){
+        result["data"] = data
     }
+
+    if(message != null){
+        result["message"] = message;
+    }
+
+    res.json(result, code);
 }
