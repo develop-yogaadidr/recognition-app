@@ -14,7 +14,7 @@ router.get('/', async function(req, res, next){
   let information = {
     Version: process.env.APP_VERSION ?? "0.0",
     Name: process.env.APP_NAME ?? "Recognition Apps",
-    ServerUrl: process.env.SERVER_URL ?? "http://localhost:3000"
+    ServerUrl: process.env.SERVER_URL ?? "http://localhost"
   }
   res.json(information);
 });
