@@ -1,5 +1,6 @@
 const { checkSupportedImages } = require("../commons/helpers");
 const { response } = require("../commons/response");
+const { ResponseCode } = require("../commons/responseCode");
 const { OpticalCharacterRecognition } = require("../helper/opticalCharacterRecognition");
 
 exports.Ocr = async (req, res, next) => {

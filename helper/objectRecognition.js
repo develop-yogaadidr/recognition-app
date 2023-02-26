@@ -1,5 +1,5 @@
 require('dotenv').config();
-const modelUrl = `${process.env.SERVER_URL}/models`;
+const modelUrl = `${process.env.SERVER_URL}/models/`;
 
 const { bufferToBase64 } = require("../commons/helpers");
 const TeachableMachine = require("@sashido/teachablemachine-node");
