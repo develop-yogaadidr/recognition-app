@@ -17,10 +17,8 @@ exports.Update = async (req, res, next) => {
   }
 
   let query = {
-    $set: {
-      name: req.body.name,
-      url: req.body.url
-    },
+    name: req.body.name,
+    url: req.body.url
   };
   let result = await ServerRepository.updateServer(params.id, query);
 
@@ -32,7 +30,7 @@ exports.Insert = async (req, res, next) => {
     response(res, null, ResponseCode.BadRequest);
     return;
   }
-  let data = {_id: new ObjectId(), name: req.body.name, url: req.body.url };
+  let data = { name: req.body.name, url: req.body.url };
   let result = await ServerRepository.createServer(data);
   response(res, req.body);
 };

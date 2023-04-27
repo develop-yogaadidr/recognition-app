@@ -2,13 +2,13 @@ var express = require('express');
 require('dotenv').config();
 var router = express.Router();
 
-const user = require("../repository/pasien")
+// const user = require("../repository/pasien")
 const pasienController = require("../controller/pasien");
 const faceController = require("../controller/face");
 const objectControlelr = require("../controller/object");
 const ocrControlelr = require("../controller/ocr");
 const serverController = require("../controller/server");
-const databaseController = require("../controller/database");
+// const databaseController = require("../controller/database");
 
 router.get('/', async function(req, res, next){
   let information = {
@@ -34,6 +34,6 @@ router.post("/object", upload.single('image'), objectControlelr.Object)
 router.post("/ocr", upload.single('image'), ocrControlelr.Ocr)
 router.post('/face', upload.array('images', 2), faceController.Face);
 
-router.post('/database/initialize', databaseController.Initialize);
+// router.post('/database/initialize', databaseController.Initialize);
 
 module.exports = router;

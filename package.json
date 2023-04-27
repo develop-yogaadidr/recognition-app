@@ -23,6 +23,7 @@
     "mongodb": "^4.3.1",
     "morgan": "~1.9.1",
     "multer": "^1.4.4",
+    "mysql2": "^3.2.4",
     "nodemon": "^2.0.16",
     "patch-package": "^6.4.7",
     "tesseract.js": "^2.1.5"

@@ -46,13 +46,7 @@ exports.Update = async (req, res, next) => {
   }
 
   let params = req.params;
-
-  let query = {
-    $set: {
-      foto: faceDecriptor,
-    },
-  };
-  let result = await PasienRepository.updatePasien(params.nik, query);
+  let result = await PasienRepository.updatePasien(params.nik, faceDecriptor);
 
   response(res, result);
 };
@@ -76,7 +70,8 @@ exports.Recognize = async (req, res, next) => {
     return;
   }
 
-  let source = await ToLabeledFaceDescriptors(pasien.foto, params.nik);
+  let foto = typeof(pasien.foto) == 'string' ? JSON.parse(pasien.foto) : pasien.foto
+  let source = await ToLabeledFaceDescriptors(foto, params.nik);
 
   let faceDecriptor = await GetFaceDescriptors(queryImage.buffer);
 
