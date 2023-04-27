@@ -18,22 +18,19 @@ exports.updatePasien = async (nik, foto) => {
   return query().updatePasien(nik, foto);
 }
 
-exports.getFromOtherServers = async (nik) => {
-  let servers = await ServerRepository.getAllServers();
-  let pasien = null;
+// PUSAT_DATA_URL
+// exports.getFromOtherServers = async (nik) => {
+exports.getFromPusatData = async (nik) => {
+  let pusatDataUrl = process.env.PUSAT_DATA_URL;
+  if (pusatDataUrl == "")
+    throw 500;
 
-  for (const element of servers) {
-    let response = await fetch(`${element.url}/pasien/${nik}/self`);
-    if (response.status == 200) {
-      let result = await response.json()
-      if (result.data != null) {
-        pasien = result.data
-        break;
-      }
-    }
+  let response = await fetch(`${pusatDataUrl}/pasien/${nik}`);
+  if (response.status == 200) {
+    return await response.json()
   }
 
-  return pasien;
+  return null;
 };
 
 function query() {

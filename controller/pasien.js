@@ -70,7 +70,7 @@ exports.Recognize = async (req, res, next) => {
     return;
   }
 
-  let foto = typeof(pasien.foto) == 'string' ? JSON.parse(pasien.foto) : pasien.foto
+  let foto = typeof (pasien.foto) == 'string' ? JSON.parse(pasien.foto) : pasien.foto
   let source = await ToLabeledFaceDescriptors(foto, params.nik);
 
   let faceDecriptor = await GetFaceDescriptors(queryImage.buffer);
@@ -85,7 +85,7 @@ async function ensurePasienFound(nik) {
   let result = pasien;
 
   if (result == null) {
-    let pasienOtherServers = await PasienRepository.getFromOtherServers(nik);
+    let pasienOtherServers = await PasienRepository.getFromPusatData(nik);
     if (pasienOtherServers != null) {
       result = pasienOtherServers;
     }
