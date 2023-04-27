@@ -11,6 +11,7 @@ exports.sql = {
             user: Config.Username,
             password: Config.Password,
             database: Config.Database,
+            connectionLimit: 10
         }
 
         let needSsl = process.env.DB_SSLMODE == "REQUIRED";
@@ -20,6 +21,6 @@ exports.sql = {
             }
         }
 
-        return mysql.createConnection(connection);
+        return mysql.createPool(connection);
     }
 };

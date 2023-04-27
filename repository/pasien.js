@@ -1,25 +1,23 @@
 require('dotenv').config();
 const { DbEngine } = require('../commons/dbEngine');
 const conn = require("../db/conn");
-const ServerRepository = require("./server");
 
 const collectionName = "pasien";
 const dbName = process.env.DB_NAME;
 
 exports.getAllPasienAsync = async () => {
-  return query().getAllPasienAsync();
+  return await query().getAllPasienAsync();
 };
 
 exports.getPasienAsync = async (nik) => {
-  return query().getPasienAsync(nik);
+  return await query().getPasienAsync(nik);
 };
 
 exports.updatePasien = async (nik, foto) => {
-  return query().updatePasien(nik, foto);
+  return await query().updatePasien(nik, foto);
 }
 
 // PUSAT_DATA_URL
-// exports.getFromOtherServers = async (nik) => {
 exports.getFromPusatData = async (nik) => {
   let pusatDataUrl = process.env.PUSAT_DATA_URL;
   if (pusatDataUrl == "")
@@ -55,6 +53,8 @@ class Sql {
   getAllPasienAsync = async () => {
     return new Promise((resolve, reject) => {
       this.connection.query("SELECT * from ??", [collectionName], (error, elements) => {
+        this.connection.end();
+
         if (error) {
           return reject(error);
         }
@@ -66,6 +66,8 @@ class Sql {
   getPasienAsync = async (nik) => {
     return new Promise((resolve, reject) => {
       this.connection.query("SELECT * from ?? where nik = ?", [collectionName, nik], (error, elements) => {
+        this.connection.end();
+
         if (error) {
           return reject(error);
         }
@@ -77,6 +79,8 @@ class Sql {
   updatePasien = async (nik, foto) => {
     return new Promise((resolve, reject) => {
       this.connection.query("UPDATE ?? SET foto = ? WHERE nik = ?", [collectionName, JSON.stringify(foto), nik], (error, elements) => {
+        this.connection.end();
+
         if (error) {
           return reject(error);
         }

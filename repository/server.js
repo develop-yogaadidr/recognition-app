@@ -8,19 +8,19 @@ const collectionName = "server";
 const dbName = process.env.DB_NAME;
 
 exports.getAllServers = async () => {
-  return query().getAllServers();
+  return await query().getAllServers();
 };
 
 exports.updateServer = async (id, data) => {
-  return query().updateServer(id, data);
+  return await query().updateServer(id, data);
 }
 
 exports.createServer = async (data) => {
-  return query().createServer(data);
+  return await query().createServer(data);
 }
 
 exports.deleteServer = async (id) => {
-  return query().deleteServer(id);
+  return await query().deleteServer(id);
 }
 
 function query() {
@@ -44,6 +44,8 @@ class Sql {
   getAllServers = async () => {
     return new Promise((resolve, reject) => {
       this.connection.query("SELECT * from ??", [collectionName], (error, elements) => {
+        this.connection.end();
+
         if (error) {
           return reject(error);
         }
@@ -55,6 +57,8 @@ class Sql {
   updateServer = async (id, data) => {
     return new Promise((resolve, reject) => {
       this.connection.query("UPDATE ?? SET ? WHERE id = ?", [collectionName, data, id], (error, elements) => {
+        this.connection.end();
+
         if (error) {
           return reject(error);
         }
@@ -66,6 +70,8 @@ class Sql {
   createServer = async (data) => {
     return new Promise((resolve, reject) => {
       this.connection.query("INSERT ?? SET ?", [collectionName, data], (error, elements) => {
+        this.connection.end();
+
         if (error) {
           return reject(error);
         }
@@ -77,6 +83,8 @@ class Sql {
   deleteServer = async (id) => {
     return new Promise((resolve, reject) => {
       this.connection.query("DELETE FROM ?? WHERE id = ?", [collectionName, id], (error, elements) => {
+        this.connection.end();
+
         if (error) {
           return reject(error);
         }
