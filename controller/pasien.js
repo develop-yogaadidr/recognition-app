@@ -7,25 +7,14 @@ const { checkSupportedImages } = require("../commons/helpers");
 
 exports.GetByNik = async (req, res, next) => {
   let params = req.params;
-  let result = await PasienRepository.getPasienAsync(params.nik);
-  if (result == null) {
-    response(res, null, ResponseCode.NotFound, `Pasien with NIK ${params.nik} is not found`);
-    return;
-  }
-
-  response(res, result);
-};
-
-exports.GetFromOtherServer = async (req, res, next) => {
-  let params = req.params;
   let result = await ensurePasienFound(params.nik);
-  if (result == null) {
-    response(res, null, ResponseCode.NotFound, `Pasien with NIK ${params.nik} is not found`);
+  if (result.pasien == null) {
+    response(res, null, ResponseCode.NotFound, `Pasien with NIK ${params.nik} is not found at locally or other servers`);
     return;
   }
 
-  response(res, result);
-}
+  response(res, result.pasien, 200, result.message);
+};
 
 exports.Update = async (req, res, next) => {
   var queryImage = await req.file;
@@ -64,23 +53,24 @@ exports.Recognize = async (req, res, next) => {
   }
 
   let params = req.params;
-  let pasien = await ensurePasienFound(params.nik);
-  if (pasien == null) {
-    response(res, null, ResponseCode.NotFound, `Pasien with NIK ${nik} is not found`);
+  let result = await ensurePasienFound(params.nik);
+  if (result.pasien == null) {
+    response(res, null, ResponseCode.NotFound, `Pasien with NIK ${params.nik} is not found at locally or other servers`);
     return;
   }
 
-  let foto = typeof (pasien.foto) == 'string' ? JSON.parse(pasien.foto) : pasien.foto
+  let foto = typeof (result.pasien.foto) == 'string' ? JSON.parse(result.pasien.foto) : result.pasien.foto
   let source = await ToLabeledFaceDescriptors(foto, params.nik);
 
   let faceDecriptor = await GetFaceDescriptors(queryImage.buffer);
 
-  let result = await CompareDecriptor(source, faceDecriptor)
+  let compareResult = await CompareDecriptor(source, faceDecriptor)
 
-  response(res, result);
+  response(res, compareResult);
 };
 
 async function ensurePasienFound(nik) {
+  let message = "-";
   let pasien = await PasienRepository.getPasienAsync(nik);
   let result = pasien;
 
@@ -89,7 +79,13 @@ async function ensurePasienFound(nik) {
     if (pasienOtherServers != null) {
       result = pasienOtherServers;
     }
+    message = "Patient data found at another server (Data Center)";
+  } else {
+    message = "Patient data found at local server";
   }
 
-  return result;
+  return {
+    message: message,
+    pasien: result
+  };
 }

@@ -19,10 +19,8 @@ router.get('/', async function(req, res, next){
   res.json(information);
 });
 
-
-router.get("/pasien/:nik", pasienController.GetFromOtherServer);
-router.get("/pasien/:nik/self", pasienController.GetByNik);
-router.post("/pasien/:nik/self", upload.single('image'), pasienController.Update); //update image
+router.get("/pasien/:nik", pasienController.GetByNik);
+router.post("/pasien/:nik/update", upload.single('image'), pasienController.Update); //update image
 router.post("/pasien/:nik/recognize", upload.single('image'), pasienController.Recognize);
 
 router.get("/servers", serverController.GetAll);
