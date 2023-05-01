@@ -1,0 +1,36 @@
+version: '3'
+services:
+  recognition-app:
+    image: recognition-app:1.1.0
+    container_name: recognition-app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - APP_VERSION=1.1
+      - APP_NAME=Face Recognition
+      - SERVER_URL=http://localhost:3000
+      - DB_ENGINE=mysql
+      - DB_URL=localhost
+      - DB_NAME=db_kamustb1
+      - DB_USER=root
+      - DB_PORT=3306
+      - DB_PASSWORD=root
+      - DB_SSLMODE=
+      - PUSAT_DATA_URL="http://pusat-data.iklaster.com/public/api"
+      - RECOGNITION_THRESHOLD=50
+      - PORT=3000
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-volume:/var/lib/mysql
+
+volumes:
+  mysql-volume:
